@@ -1,0 +1,52 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Публикации
+{% endblock title %}
+
+{% block content %}
+    <h1>Публикация №1</h1>
+    {% if news %}
+    <table>
+        <tr>
+            <td>
+                <h4>Заголовок</h4>
+            </td>
+            <td>
+                 <h4>Автор </h4>
+            </td>
+            <td>
+                 <h4>Дата публикации </h4>
+            </td>
+            <td>
+                 <h4>Категория </h4>
+            </td>
+            <td>
+                 <h4>Текст </h4>
+            </td>
+         </tr>
+<hr>
+        <tr>
+            <td>
+                {{ news.title|censor }}
+            </td>
+            <td>
+                {{ news.author.authorUser.username }}
+            </td>
+            <td>
+                {{ news.dateCreation|date:'d-M-Y H:m' }}
+            </td>
+            <td>
+                {{ news.get_categoryType_display }}
+            </td>
+            <td>
+                {{ news.text|censor }}
+            </td>
+        </tr>
+    </table>
+    {% else %}
+        <h1>Новостей нет!</h1>
+    {% endif %}
+{% endblock content %}

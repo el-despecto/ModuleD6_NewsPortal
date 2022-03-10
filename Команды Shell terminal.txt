@@ -1,0 +1,139 @@
+>>> from news.models import *  
+>>> Dr=User.objects.create_user(username='Доктор Фишер')      
+>>> Author.objects.create(authorUser=Dr) 
+<Author: Author object (1)>
+>>> Mr=User.objects.create_user(username='Мистер Смит')
+>>> Author.objects.create(authorUser=MR) 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'MR' is not defined
+>>> Author.objects.create(authorUser=Mr)  
+<Author: Author object (2)>
+>>> Category.objects.create(name='Sport') 
+<Category: Category object (1)>
+>>> Category.objects.create(name='IT')
+<Category: Category object (2)>
+>>> Category.objects.create(name='World')
+<Category: Category object (3)>
+>>> Category.objects.create(name='Science')
+<Category: Category object (4)>
+>>> Post.objects.create(author=Author.objects.get(id=1), categoryType='AR', title='Лыжник Большунов принес России первое золото Олимпиады', text='Трехкратный чемпион из
+Норвегии уступил россиянину девять минут.Большунов выиграл гонку с огромным преимуществом, несмотря на падение')
+<Post: Post object (1)>
+>>> Post.objects.create(author=Author.objects.get(id=2), categoryType='AR', title='Обзор видеокарты NVIDIA GeForce RTX 3050: младший — не значит дешевый', text='Чтобы у
+гадать результат противостояния новинки NVIDIA с Radeon RX 6500 XT, достаточно взглянуть на спецификации. Другой вопрос — как она соотносится с остальными современными 
+видеокартами и популярными устройствами прошлых поколений. Ведь что-что, а цены RTX 3050 пока весьма далеки от бюджетных ориентиров')
+<Post: Post object (2)>
+>>> Post.objects.create(author=Author.objects.get(id=1), categoryType='NW', title='NASA обеспокоилось планами SpaceX запустить 30 000 интернет-спутников — на орбите мож
+ет стать тесно', text='Североамериканское аэрокосмическое агентство NASA официально выразило беспокойство в связи с планом компании SpaceX вывести на орбиту 30 000 спут
+ников для группировки Starlink.')
+<Post: Post object (3)>
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1))
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3))
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2))
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=4)) 
+>>> Post.objects.get(id=3).postCategory.add(Category.objects.get(id=3)) 
+>>> Post.objects.get(id=3).postCategory.add(Category.objects.get(id=4)) 
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1),commentUser=Author.objects.get(id=1).authorUser, text='Отличный старт нашей сборной!')   
+<Comment: Comment object (1)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=3),commentUser=Author.objects.get(id=1).authorUser, text='Почему индийская коммерческая телекомпания NDTV "Ne
+w Delhi Television", делает заявления от лица NASA, где ссылка на оригинал письма?')
+<Comment: Comment object (2)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2),commentUser=Author.objects.get(id=2).authorUser, text='Не устраивает цена - не покупай. Какие проблемы?')
+<Comment: Comment object (3)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2),commentUser=Author.objects.get(id=1).authorUser, text='Такие, что когда надо, приходится покупать даже пон
+е устраивающей цене')
+<Comment: Comment object (4)>
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=1).rating_comment
+1
+>>> Comment.objects.get(id=1).like() 
+>>> Comment.objects.get(id=1).like() 
+>>> Comment.objects.get(id=1).like() 
+>>> Comment.objects.get(id=2).dislike()  
+>>> Comment.objects.get(id=1).rating_comment 
+4
+>>> Comment.objects.get(id=2).dislike()
+>>> Comment.objects.get(id=2).like() 
+>>> Comment.objects.get(id=2).rating_comment 
+-1
+>>> Comment.objects.get(id=3).like()
+>>> Comment.objects.get(id=3).like()
+>>> Comment.objects.get(id=4).dislike() 
+>>> Comment.objects.get(id=4).dislike() 
+>>> Comment.objects.get(id=4).dislike() 
+>>> Comment.objects.get(id=4).dislike() 
+>>> Comment.objects.get(id=4).dislike() 
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=1).like()
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=2).like()
+>>> Post.objects.get(id=2).dislike() 
+>>> Post.objects.get(id=3).dislike()
+>>> Post.objects.get(id=3).dislike()
+>>> Post.objects.get(id=3).dislike()
+>>> Author.objects.get(id=1)              
+<Author: Author object (1)>
+>>> a=Author.objects.get(id=1)              
+>>> a.update_rating()
+>>> a.ratingAuthor
+4
+>>> a=Author.objects.order_by('-ratingAuthor')[:1]
+>>> a
+<QuerySet [<Author: Author object (1)>]>
+>>> Author.objects.get(id=2)  
+<Author: Author object (2)>
+>>> b=Author.objects.get(id=2) 
+>>> b.update_rating()
+>>> b.ratingAuthor                                 
+8
+>>> b=Author.objects.order_by('-ratingAuthor')[:1]
+>>> b
+<QuerySet [<Author: Author object (2)>]>
+>>> a=Author.objects.order_by('-ratingAuthor')[:1]
+>>> a
+>>> for i in a:    hor    ame
+...     i.ratingAuthor                             
+...     i.authorUser.username
+... 
+8
+'Мистер Смит'
+>>>
+>>> c=Post.objects.order_by('-rating_post')[:1]
+>>> c
+>>> for i in c:     
+...     i.dateCreation
+...     i.author.authorUser.username
+...     i.author.ratingAuthor
+...     i.title
+...     i.preview()
+... 
+datetime.datetime(2022, 2, 10, 17, 33, 52, 78686)
+'Доктор Фишер'
+4
+'Лыжник Большунов принес России первое золото Олимпиады'
+'Трехкратный чемпион изНорвегии уступил россиянину девять минут.Большунов выиграл гонку с огромным преимуществом, несмотря н...'
+>>>
+>>> d=Comment.objects.order_by('-rating_comment')[:1]  
+>>> d
+<QuerySet [<Comment: Comment object (1)>]>
+>>> for i in d:   ser
+...     i.dateCreation              
+...     i.commentUser                              
+...     i.rating_comment
+...     i.text
+... 
+datetime.datetime(2022, 2, 10, 17, 36, 43, 389856)
+<User: Доктор Фишер>
+4
+'Отличный старт нашей сборной!'
+>>>
+
+
+  
+
+

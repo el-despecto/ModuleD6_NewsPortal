@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Публикации
+{% endblock title %}
+
+{% block content %}
+<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
+<button> <a href="sign/logout/">Выйти</a> </button>
+{% if is_not_authors %}
+<button> <a href="sign/upgrade/"> Стать автором</a> </button>
+    {% else %}
+<hr>
+<button> <a href="{% url 'post_create' %}">Добавить публикацию</a> <br></button>
+<button> <a href="{% url 'news_edit' %}">Редактировать публикации</a> <br></button>
+{% endif %}
+{% endblock content %}

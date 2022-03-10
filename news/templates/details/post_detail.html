@@ -1,0 +1,57 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Публикации
+{% endblock title %}
+
+{% block content %}
+    {% if news %}
+    <h1>Публикация от {{news.dateCreation|date:'d-M-Y'}}</h1>
+    <table>
+        <tr>
+            <td>
+                <h4>Заголовок</h4>
+            </td>
+            <td>
+                 <h4>Автор </h4>
+            </td>
+            <td>
+                 <h4>Дата публикации </h4>
+            </td>
+            <td>
+                 <h4>Категория </h4>
+            </td>
+            <td>
+                 <h4>Текст </h4>
+            </td>
+         </tr>
+<hr>
+        <tr>
+            <td>
+                {{ news.title|censor }}
+            </td>
+            <td>
+                {{ news.author.authorUser.username }}
+            </td>
+            <td>
+                {{ news.dateCreation|date:'d-M-Y H:m' }}
+            </td>
+            <td>
+                {{ news.get_categoryType_display }}
+            </td>
+            <td>
+                {{ news.text|censor }}
+            </td>
+        </tr>
+    </table>
+    {% else %}
+        <h1>Новостей нет!</h1>
+    {% endif %}
+{% if is_not_subscribe %}
+<!--GET запрос, который передает в наше представление значение категории, переменная post.category.id, -->
+<!--которая в дальнейшем необходима для добавления подписчиков-->
+<button><a href="add_subscribe/?pk={{ news.PostCategory.id }}">Подписаться</a></button>
+{% endif %}
+{% endblock content %}
