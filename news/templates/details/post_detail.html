@@ -8,7 +8,7 @@
 
 {% block content %}
     {% if news %}
-    <h1>Публикация от {{news.dateCreation|date:'d-M-Y'}}</h1>
+    <h1>{{ news.get_categoryType_display }} от {{news.dateCreation|date:'d-M-Y'}}</h1>
     <table>
         <tr>
             <td>
@@ -16,9 +16,6 @@
             </td>
             <td>
                  <h4>Автор </h4>
-            </td>
-            <td>
-                 <h4>Дата публикации </h4>
             </td>
             <td>
                  <h4>Категория </h4>
@@ -35,12 +32,7 @@
             <td>
                 {{ news.author.authorUser.username }}
             </td>
-            <td>
-                {{ news.dateCreation|date:'d-M-Y H:m' }}
-            </td>
-            <td>
-                {{ news.get_categoryType_display }}
-            </td>
+            <td>{{ news.category }} </td>
             <td>
                 {{ news.text|censor }}
             </td>
@@ -50,8 +42,6 @@
         <h1>Новостей нет!</h1>
     {% endif %}
 {% if is_not_subscribe %}
-<!--GET запрос, который передает в наше представление значение категории, переменная post.category.id, -->
-<!--которая в дальнейшем необходима для добавления подписчиков-->
-<button><a href="add_subscribe/?pk={{ news.PostCategory.id }}">Подписаться</a></button>
+<button><a href="add_subscribe/?pk={{ news.Category.id }}">Подписаться</a></button>
 {% endif %}
 {% endblock content %}

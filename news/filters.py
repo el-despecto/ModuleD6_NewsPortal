@@ -12,4 +12,5 @@ class PostFilter(FilterSet):
             'author': ['in'],
             'dateCreation': ['date'],
             'rating_post': ['lt'],
+            'category': ['lt'],
         }

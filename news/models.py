@@ -40,7 +40,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE) #связь «один ко многим» с моделью Author;
     categoryType = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=Article)
     dateCreation = models.DateTimeField(auto_now_add=True)
-    postCategory = models.ManyToManyField(Category, through='PostCategory') #связь «многие ко многим» с моделью Category
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True) #связь «многие ко многим» с моделью Category
     title = models.CharField(max_length=228)
     text = models.TextField()
     rating_post = models.SmallIntegerField(default=0)
@@ -63,9 +63,9 @@ class Post(models.Model):
         return f'/news/{self.id}'
 
 
-class PostCategory(models.Model):
-    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE) #связь «один ко многим» с моделью Post;
-    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE) #связь «один ко многим» с моделью Category;
+#class PostCategory(models.Model):
+#    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE) #связь «один ко многим» с моделью Post;
+#    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE) #связь «один ко многим» с моделью Category;
 
 
 

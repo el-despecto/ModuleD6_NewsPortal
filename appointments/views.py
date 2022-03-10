@@ -4,7 +4,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
 
-from news.models import PostCategory, Post
+from news.models import Category, Post
 from .models import Appointment
 
 class AppointmentView(View):

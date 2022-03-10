@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
 from django.core.paginator import Paginator
-from .models import Post, PostCategory,  Comment
+from .models import Post, Category,  Comment
 from datetime import datetime
 from django.shortcuts import redirect
 
@@ -43,6 +43,14 @@ class PostDetailView(DetailView):
     template_name = 'details/post_detail.html'
     context_object_name = 'news'
     queryset = Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        id = self.kwargs.get('pk')
+        qwe = Category.objects.filter(pk=Post.objects.get(pk=id).category.id).values("subscribers__username")
+        context['is_not_subscribe'] = not qwe.filter(subscribers__username=self.request.user).exists()
+        context['is_subscribe'] = qwe.filter(subscribers__username=self.request.user).exists()
+        return context
 
 
 class PostCreateView(CreateView):
@@ -85,8 +93,8 @@ class PostEdit(ListView):
 @login_required
 def add_subscribe(request, **kwargs):
     pk = request.GET.get('pk', )
-    print(request.user, ' подписан на обновления категории:', PostCategory.objects.get(pk=pk))
-    PostCategory.objects.get(pk=pk).subscribers.add(request.user)
+    print(request.user, ' подписан на обновления категории:', Category.objects.get(pk=pk))
+    Category.objects.get(pk=pk).subscribers.add(request.user)
     return redirect('/news/')
 
 #class CommentList(ListView):
