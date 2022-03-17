@@ -42,6 +42,9 @@
         <h1>Новостей нет!</h1>
     {% endif %}
 {% if is_not_subscribe %}
-<button><a href="add_subscribe/?pk={{ news.Category.id }}">Подписаться</a></button>
+<button><a href="add_subscribe/?pk={{ news.category.id }}">Подписаться</a></button>
+{% endif %}
+{% if is_subscribe %}
+<button><a href="del_subscribe/?pk={{ news.category.id }}">Отписаться</a></button>
 {% endif %}
 {% endblock content %}

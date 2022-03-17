@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 class Author(models.Model):
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE) #cвязь «один к одному» с встроенной моделью пользователей User;
@@ -60,7 +61,7 @@ class Post(models.Model):
         return f'{self.title}'
 
     def get_absolute_url(self):
-        return f'/news/{self.id}'
+        return reverse('news_detail', kwargs={'pk': self.id})
 
 
 #class PostCategory(models.Model):

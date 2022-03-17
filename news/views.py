@@ -39,7 +39,7 @@ class PostSearch(ListView):
         return context
 
 class PostDetailView(DetailView):
-    model = Post
+#    model = Post
     template_name = 'details/post_detail.html'
     context_object_name = 'news'
     queryset = Post.objects.all()
@@ -47,22 +47,22 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         id = self.kwargs.get('pk')
-        qwe = Category.objects.filter(pk=Post.objects.get(pk=id).category.id).values("subscribers__username")
-        context['is_not_subscribe'] = not qwe.filter(subscribers__username=self.request.user).exists()
-        context['is_subscribe'] = qwe.filter(subscribers__username=self.request.user).exists()
+        sub_user = Category.objects.filter(pk=Post.objects.get(pk=id).category.id).values("subscribers__username")
+        context['is_not_subscribe'] = not sub_user.filter(subscribers__username=self.request.user).exists()
+        context['is_subscribe'] = sub_user.filter(subscribers__username=self.request.user).exists()
         return context
 
 
 class PostCreateView(CreateView):
     template_name = 'details/post_create.html'
     form_class = PostForm
-
+    success_url = '/news/'
 
 # дженерик для редактирования объекта
 class PostUpdateView(UpdateView):
     template_name = 'details/post_create.html'
     form_class = PostForm
-
+    success_url = '/news_/'
     # метод get_object мы используем вместо queryset, чтобы получить информацию об объекте, который мы собираемся редактировать
     def get_object(self, **kwargs):
         id = self.kwargs.get('pk')
@@ -97,6 +97,13 @@ def add_subscribe(request, **kwargs):
     Category.objects.get(pk=pk).subscribers.add(request.user)
     return redirect('/news/')
 
+
+@login_required
+def del_subscribe(request, **kwargs):
+    pk = request.GET.get('pk', )
+    print('Пользователь', request.user, 'удален из подписчиков категории:', Category.objects.get(pk=pk))
+    Category.objects.get(pk=pk).subscribers.remove(request.user)
+    return redirect('/news/')
 #class CommentList(ListView):
  #   model = Comment
   #  template_name = 'flatpages/News.html'
