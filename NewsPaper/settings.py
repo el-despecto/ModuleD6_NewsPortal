@@ -39,19 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'news',
     'accounts',
-    'appointments',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',
     'django_filters',
+    'apscheduler',
+    'django_apscheduler',
     'sign',
     #'protect',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-#    'appointments.apps.AppointmentConfig',
-#    'django_apscheduler',
+    'appointments.apps.AppointmentsConfig',
+
 ]
 DEFAULT_FROM_EMAIL = 'd3spector@yandex.ru'
 
@@ -157,10 +158,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'#'mandatory'
-# Модуль 6.5 - действия по расписанию
-#APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
-#APSCHEDULER_RUN_NOW_TIMEOUT = 25
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #'none'#
+
 
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
@@ -178,3 +177,9 @@ MANAGERS =[
 ]
 
 SERVER_EMAIL = 'd3spector@yandex.ru'
+
+# формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам)
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+# если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
