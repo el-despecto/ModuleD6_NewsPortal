@@ -167,14 +167,6 @@ EMAIL_HOST_USER = 'd3spector'  # ваше имя пользователя, на�
 EMAIL_HOST_PASSWORD = 'spritcniruhqwcxr'  # пароль от почты
 EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
 
-ADMINS = [
-    ('kap4eniy', 'kap4eniy@list.ru'),
-    ('El_despecto', 'el_despecto@yandex.ru')
-]
-
-MANAGERS =[
-    ('kap4eniyGmail', 'kap4eniy@Gmail.com'),
-]
 
 SERVER_EMAIL = 'd3spector@yandex.ru'
 

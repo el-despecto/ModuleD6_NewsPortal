@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Недельная рассылка новостей по категории: {{ category_name }} </title>
+    <title> Новости за неделю категории: {{ category_name }} </title>
 </head>
 <body>
-    <h1> Здравствуйте, {{ user }}, новые статьи из категории {{ category_name }} за прошлую неделю ({{ week_number_last }}) </h1>
+    <h1> Здравствуйте, {{ user }}, новые статьи из категории {{ category_name }} за неделю ({{ week_number_last }}) </h1>
 <hr>
     <h1> Текст {{ all_news }} <h1>
-    <a href="{% url 'post_detail' news.id %}"><u>{{ news.title|truncatechars:50 }}</u> </a>
-    <p><a href="http://127.0.0.1:8000{{ post.get_absolute_url }}">открыть публикацию</a></p>
+    <p><a href="http://127.0.0.1:8000{{ news.get_absolute_url }}">открыть публикацию</a></p>
 <br>
 </body>
 </html>
