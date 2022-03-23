@@ -101,9 +101,11 @@ def add_subscribe(request, **kwargs):
 @login_required
 def del_subscribe(request, **kwargs):
     pk = request.GET.get('pk', )
-    print('Пользователь', request.user, 'удален из подписчиков категории:', Category.objects.get(pk=pk))
+    print(request.user, 'удален из подписчиков категории:', Category.objects.get(pk=pk))
     Category.objects.get(pk=pk).subscribers.remove(request.user)
     return redirect('/news/')
+
+
 #class CommentList(ListView):
  #   model = Comment
   #  template_name = 'flatpages/News.html'

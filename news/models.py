@@ -69,7 +69,6 @@ class Post(models.Model):
 #    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE) #связь «один ко многим» с моделью Category;
 
 
-
 class Comment(models.Model):
     commentPost = models.ForeignKey(Post, on_delete=models.CASCADE) #связь «один ко многим» с моделью Post;
     commentUser = models.ForeignKey(User, on_delete=models.CASCADE) #связь «один ко многим» со встроенной моделью User;

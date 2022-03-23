@@ -81,12 +81,10 @@ class Command(BaseCommand):
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
 
-        # добавляем работу нашему задачнику
+
         scheduler.add_job(
             send_mail,
             trigger=CronTrigger(second="*/30"),
-            # временно отключеный код
-            # отправляем письма подписчикам в понедельник в 8 утра
             # trigger=CronTrigger(day_of_week="mon", hour="08", minute="00"),
             id="send_mail",
             max_instances=1,
